@@ -1,5 +1,6 @@
-package com.teamproject.wounddetection.data
+package com.teamproject.wounddetection.data.api
 
+import com.teamproject.wounddetection.data.model.User
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

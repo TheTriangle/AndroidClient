@@ -1,4 +1,4 @@
-package com.teamproject.wounddetection.data
+package com.teamproject.wounddetection.data.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

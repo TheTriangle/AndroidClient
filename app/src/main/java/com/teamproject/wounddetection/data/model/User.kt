@@ -1,8 +1,8 @@
-package com.teamproject.wounddetection.data
+package com.teamproject.wounddetection.data.model
 
 import com.google.gson.annotations.SerializedName
 
-class User(
+data class User(
     @SerializedName("login") var login: String,
     @SerializedName("password") var password: String
 )
