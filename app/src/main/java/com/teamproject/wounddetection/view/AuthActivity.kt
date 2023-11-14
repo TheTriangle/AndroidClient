@@ -8,15 +8,16 @@ import com.teamproject.wounddetection.viewmodel.AuthViewModel
 
 class AuthActivity : AppCompatActivity() {
     private lateinit var binding: AuthActivityBinding
-
+    private val viewModel: AuthViewModel by viewModels { AuthViewModel.Factory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AuthActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val viewModel: AuthViewModel by viewModels()
         binding.buttonSignIn.setOnClickListener {
-            viewModel.makeSignInRequest(binding.editTextLogin.text.toString(),
-                                        binding.editTextPassword.text.toString())
+            viewModel.makeSignInRequest(
+                binding.editTextLogin.text.toString(),
+                binding.editTextPassword.text.toString()
+            )
         }
     }
 }

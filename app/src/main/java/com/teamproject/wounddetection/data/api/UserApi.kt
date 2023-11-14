@@ -8,8 +8,8 @@ import retrofit2.http.POST
 
 interface UserApi {
     @GET("/profile")
-    fun getUser(): Call<User>
+    suspend fun getUser(): Call<User>
 
-    @POST("/login")
-    fun login(@Body user: User)
+    @POST("/login/")
+    suspend fun login(@Body user: User)
 }
