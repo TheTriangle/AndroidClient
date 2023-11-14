@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FirstFragment">
+
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.teamproject.wounddetection.view.AuthFragment"
+        android:label="@string/auth_fragment_label"
+        tools:layout="@layout/fragment_auth">
+
+        <action
+            android:id="@+id/action_AuthFragment_to_CameraFragment"
+            app:destination="@id/SecondFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SecondFragment"
+        android:name="com.teamproject.wounddetection.view.CameraFragment"
+        android:label="@string/camera_fragment_label"
+        tools:layout="@layout/fragment_camera">
+    </fragment>
+</navigation>
