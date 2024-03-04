@@ -5,6 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface PatientApi {
-    @GET("/verifyCode/{code}")
+    @GET("/getPatient/{code}")
     suspend fun getPatient(@Path("code") code: String): Patient
 }
