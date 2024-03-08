@@ -19,6 +19,8 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.teamproject.wounddetection.databinding.FragmentCameraBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -32,6 +34,8 @@ class CameraFragment : Fragment() {
     private var imageCapture: ImageCapture? = null
 
     private lateinit var cameraExecutor: ExecutorService
+
+    private val args: CameraFragmentArgs by navArgs()
     // This property is only valid between onCreateView and
     // onDestroyView.
 
@@ -76,6 +80,10 @@ class CameraFragment : Fragment() {
 
         // Set up the listeners for take photo and video capture buttons
         binding.imageCaptureButton.setOnClickListener { takePhoto() }
+        binding.ibCaseList.setOnClickListener {
+            val action = CameraFragmentDirections.actionCameraFragmentToCaseListFragment(args.patient.cases.toTypedArray())
+            findNavController().navigate(action)
+        }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
     }

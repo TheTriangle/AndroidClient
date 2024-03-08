@@ -7,6 +7,13 @@
     <string name="camera_fragment_label">Camera Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="case_title">Analyzed by %1$s at %2$s</string>
+    <string name="depth">Wound depth: %1$s</string>
+    <string name="wound_class">Wound class: %1$s</string>
+    <string name="type">Wound type: %1$s</string>
+    <string name="area">Wound area: %1$s</string>
+    <string name="diameter">Wound diameter: %1$s</string>
+    <string name="rot_percentage">Wound rot percentage: %1$s</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
