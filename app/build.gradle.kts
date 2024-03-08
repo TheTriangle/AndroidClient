@@ -9,6 +9,12 @@ android {
     namespace = "com.teamproject.wounddetection"
     compileSdk = 34
 
+    testOptions {
+        // Used for Unit testing Android dependent elements in /test folder
+        unitTests.isIncludeAndroidResources  = true
+        unitTests.isReturnDefaultValues = true
+    }
+
     defaultConfig {
         applicationId = "com.teamproject.wounddetection"
         minSdk = 24
@@ -61,8 +67,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.recyclerview:recyclerview:1.3.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+
     var camerax_version = "1.3.0"
     implementation("androidx.camera:camera-core:${camerax_version}")
     implementation("androidx.camera:camera-camera2:${camerax_version}")
@@ -82,4 +87,10 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 
     implementation("com.squareup.picasso:picasso:2.8")
+
+    testImplementation("org.mockito:mockito-core:3.4.6")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
 }
