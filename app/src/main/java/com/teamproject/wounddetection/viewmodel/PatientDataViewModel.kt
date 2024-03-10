@@ -38,10 +38,20 @@ class PatientDataViewModel(
                     if (e.code() == 404) {
                         _patient.postValue(Resource.error("Patient does not exist", null))
                     } else {
-                        _patient.postValue(Resource.error("An error occurred while getting patient data", null))
+                        _patient.postValue(
+                            Resource.error(
+                                "An error occurred while getting patient data",
+                                null
+                            )
+                        )
                     }
                 } else {
-                    _patient.postValue(Resource.error("An error occurred while getting patient data", null))
+                    _patient.postValue(
+                        Resource.error(
+                            "An error occurred while getting patient data",
+                            null
+                        )
+                    )
                 }
             }
         }
