@@ -11,16 +11,18 @@ import okhttp3.Response
 class AddAuthHeadersInterceptor(private val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
-        val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-        val preferences = EncryptedSharedPreferences.create(
-            "AUTH",
-            masterKeyAlias,
-            context,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-        val token = preferences.getString("token", "")
-        builder.addHeader("Authorization", "Token $token")
+        if (!chain.request().url.toString().contains("accounts")) {
+            val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+            val preferences = EncryptedSharedPreferences.create(
+                "AUTH",
+                masterKeyAlias,
+                context,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+            val token = preferences.getString("token", "")
+            builder.addHeader("Authorization", "Token $token")
+        }
         return chain.proceed(builder.build())
     }
 }
