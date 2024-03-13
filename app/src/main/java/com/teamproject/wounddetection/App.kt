@@ -16,7 +16,7 @@ class App : Application() {
             .baseUrl(BASE_URL)
             .client(
                 OkHttpClient.Builder()
-                    .addInterceptor(ReceivedCookiesInterceptor(this))
+//                    .addInterceptor(ReceivedCookiesInterceptor(this))
                     .addInterceptor(AddAuthHeadersInterceptor(this))
                     .build()
             )

@@ -12,7 +12,7 @@ object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
             AuthViewModel(
-                app().retrofit.create(UserApi::class.java)
+                app().retrofit.create(UserApi::class.java), application = app()
             )
         }
 
