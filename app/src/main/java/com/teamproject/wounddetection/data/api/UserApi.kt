@@ -1,5 +1,6 @@
 package com.teamproject.wounddetection.data.api
 
+import com.teamproject.wounddetection.data.model.Auth
 import com.teamproject.wounddetection.data.model.User
 import retrofit2.Call
 import retrofit2.http.Body
@@ -10,6 +11,6 @@ interface UserApi {
     @GET("/profile")
     suspend fun getUser(): Call<User>
 
-    @POST("/login/")
-    suspend fun login(@Body user: User)
+    @POST("/accounts/login/")
+    suspend fun login(@Body user: User): Auth
 }

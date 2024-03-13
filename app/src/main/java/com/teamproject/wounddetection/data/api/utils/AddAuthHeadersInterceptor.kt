@@ -9,23 +9,18 @@ import okhttp3.Response
 
 
 class AddAuthHeadersInterceptor(private val context: Context) : Interceptor {
-    private val cookies = listOf("csrftoken", "sessionid")
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
         val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
         val preferences = EncryptedSharedPreferences.create(
-            "COOKIES",
+            "AUTH",
             masterKeyAlias,
             context,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        var s = ""
-        for (cookie in cookies) {
-            s += "${cookie}=${preferences.getString(cookie, "")};"
-        }
-        builder.addHeader("Cookie", s)
-        builder.addHeader("X-CSRFToken", preferences.getString("csrftoken", "").toString())
+        val token = preferences.getString("token", "")
+        builder.addHeader("Authorization", "Token $token")
         return chain.proceed(builder.build())
     }
 }
