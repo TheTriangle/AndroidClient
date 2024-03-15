@@ -23,8 +23,8 @@ class PatientDataViewModel(
         private const val TAG = "PatientDataViewModel"
     }
 
-    private val _patient = MutableLiveData<Resource<Patient>>()
-    val patient: LiveData<Resource<Patient>> = _patient
+    private var _patient = MutableLiveData<Resource<Patient>?>()
+    val patient: LiveData<Resource<Patient>?> = _patient
 
     fun checkPatient(code: String) {
         viewModelScope.launch(dispatcher) {
@@ -56,4 +56,9 @@ class PatientDataViewModel(
             }
         }
     }
+
+    fun resetPatient() {
+        _patient.postValue(null)
+    }
+
 }

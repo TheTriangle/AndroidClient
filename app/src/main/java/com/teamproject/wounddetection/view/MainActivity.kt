@@ -1,6 +1,8 @@
 package com.teamproject.wounddetection.view
 
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,12 +20,10 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-//        val navController = findNavController(R.id.nav_host_fragment_content_main)
-//        appBarConfiguration = AppBarConfiguration(navController.graph)
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-
+        onBackPressedDispatcher.addCallback(this) {
+            Log.d("mytag", "back pressed ")
+            findNavController(R.id.nav_host_fragment_content_main).navigateUp()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

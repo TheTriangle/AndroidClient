@@ -43,30 +43,32 @@ class PatientDataFragment : Fragment() {
 
     private fun setupObserver() {
         viewModel.patient.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    binding.apply {
-                        btnEnterPatientCode.visibility = View.VISIBLE
-                        progressBar.visibility = View.GONE
-                        val action = PatientDataFragmentDirections.actionPatientDataFragmentToCameraFragment(it.data!!)
-                        findNavController().navigate(action)
+            if (it != null) {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        binding.apply {
+                            btnEnterPatientCode.visibility = View.VISIBLE
+                            progressBar.visibility = View.GONE
+                            val action = PatientDataFragmentDirections.actionPatientDataFragmentToCameraFragment(it.data!!)
+                            findNavController().navigate(action)
+                            viewModel.resetPatient()
+                        }
                     }
-                }
-                Status.ERROR -> {
-                    binding.apply {
-                        btnEnterPatientCode.visibility = View.VISIBLE
-                        progressBar.visibility = View.GONE
-                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                    Status.ERROR -> {
+                        binding.apply {
+                            btnEnterPatientCode.visibility = View.VISIBLE
+                            progressBar.visibility = View.GONE
+                            Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
-                Status.LOADING -> {
-                    binding.apply {
-                        btnEnterPatientCode.visibility = View.GONE
-                        progressBar.visibility = View.VISIBLE
+                    Status.LOADING -> {
+                        binding.apply {
+                            btnEnterPatientCode.visibility = View.GONE
+                            progressBar.visibility = View.VISIBLE
+                        }
                     }
                 }
             }
-
         }
     }
 }
