@@ -12,6 +12,14 @@ data class Case(
 ) : Parcelable
 
 @Parcelize
+data class CasePost(
+    val id: Int?,
+    val doctor: Doctor,
+    val photo: ByteArray,
+    val date: String,
+) : Parcelable
+
+@Parcelize
 data class WoundReport(
     val id: Int,
     val depth: String,

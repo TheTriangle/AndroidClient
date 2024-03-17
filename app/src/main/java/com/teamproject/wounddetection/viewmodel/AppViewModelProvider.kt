@@ -21,6 +21,11 @@ object AppViewModelProvider {
                 app().retrofit.create(PatientApi::class.java)
             )
         }
+        initializer {
+            CaseSelectionPopupViewModel(
+                app().retrofit.create(PatientApi::class.java)
+            )
+        }
     }
 }
 

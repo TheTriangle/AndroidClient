@@ -52,7 +52,11 @@ class AuthViewModel(
             } catch (e: Throwable) {
                 if (e is HttpException) {
                     Log.d(TAG, "makeSignInRequest: " + (e.response()?.body() ?: e.response()))
-                    _auth.postValue(Resource.error(e.message(), null))
+                    if (e.message() == "Bad Request") {
+                        _auth.postValue(Resource.error("Wrong credentials", null))
+                    } else {
+                        _auth.postValue(Resource.error(e.message(), null))
+                    }
                 } else {
                     Log.d(TAG, "makeSignInRequest: " + e.message)
                     _auth.postValue(Resource.error("An error occurred while logging in", null))

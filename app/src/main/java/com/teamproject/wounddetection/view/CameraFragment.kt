@@ -123,6 +123,12 @@ class CameraFragment : Fragment() {
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults){
                     val msg = "Photo capture succeeded: ${output.savedUri}"
+                    if (output.savedUri != null) {
+                        val action = CameraFragmentDirections.actionCameraFragmentToCaseSelectionPopupFragment(args.patient.id.toString(),
+                            output.savedUri!!
+                        )
+                        findNavController().navigate(action)
+                    }
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
                 }

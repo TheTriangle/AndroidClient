@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_CameraFragment_to_caseListFragment"
             app:destination="@id/caseListFragment" />
+        <action
+            android:id="@+id/action_CameraFragment_to_caseSelectionPopupFragment"
+            app:destination="@id/caseSelectionPopupFragment" />
     </fragment>
     <fragment
         android:id="@+id/PatientDataFragment"
@@ -57,4 +60,16 @@
             android:name="case"
             app:argType="com.teamproject.wounddetection.data.model.Case" />
     </fragment>
+    <dialog
+        android:id="@+id/caseSelectionPopupFragment"
+        android:name="com.teamproject.wounddetection.view.CaseSelectionPopupFragment"
+        android:label="fragment_case_selection_popup"
+        tools:layout="@layout/fragment_case_selection_popup" >
+        <argument
+            android:name="patientCode"
+            app:argType="string" />
+        <argument
+            android:name="imageUri"
+            app:argType="android.net.Uri" />
+    </dialog>
 </navigation>

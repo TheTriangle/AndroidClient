@@ -8,7 +8,7 @@ import com.teamproject.wounddetection.data.model.Case
 import com.teamproject.wounddetection.databinding.CaseListItemBinding
 
 class CaseAdapter(
-    private val values: List<Case>,
+    private val values: MutableList<Case>,
     private val onClick: (Case) -> Unit
 ) : RecyclerView.Adapter<CaseAdapter.ViewHolder>() {
 
@@ -39,4 +39,13 @@ class CaseAdapter(
         val date: TextView = binding.tvDate
         val root = binding.root
     }
+
+    fun clear() {
+        values.clear()
+    }
+
+    fun addData(cases: List<Case>) {
+        values.addAll(cases)
+    }
+
 }

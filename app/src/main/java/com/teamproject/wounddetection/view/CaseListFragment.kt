@@ -34,7 +34,7 @@ class CaseListFragment : Fragment() {
     private fun setupView() {
         binding.apply {
             rvCases.layoutManager = LinearLayoutManager(context)
-            adapter = CaseAdapter(args.cases.toList(), ::onCaseClick)
+            adapter = CaseAdapter(args.cases.toMutableList(), ::onCaseClick)
             rvCases.adapter = adapter
         }
     }

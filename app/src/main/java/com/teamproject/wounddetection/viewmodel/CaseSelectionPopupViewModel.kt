@@ -1,6 +1,5 @@
 package com.teamproject.wounddetection.viewmodel
 
-
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,25 +14,21 @@ import com.teamproject.wounddetection.utils.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 
-class PatientDataViewModel(
-    private val api: PatientApi,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-) : ViewModel() {
+class CaseSelectionPopupViewModel(private val api: PatientApi, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : ViewModel() {
+
+    private val _cases: MutableLiveData<Resource<List<Case>>> = MutableLiveData<Resource<List<Case>>>()
+    val cases: LiveData<Resource<List<Case>>> = _cases
 
     companion object {
-        private const val TAG = "PatientDataViewModel"
+        private const val TAG = "CaseSelectionPopupViewModel"
     }
 
-    private var _patient = MutableLiveData<Resource<Patient>?>()
-    val patient: LiveData<Resource<Patient>?> = _patient
-
-    fun checkPatient(code: String) {
+    fun getCases(patientCode: String) {
         viewModelScope.launch(dispatcher) {
             try {
-                _patient.postValue(Resource.loading(null))
-//                val patient = api.getPatient(code)
+                _cases.postValue(Resource.loading(_cases.value?.data ?: listOf()))
+//                val user = api.getPatient(patientCode)
                 val patient = Patient(
                     id = 1, name = "Name", email = "qwe@zxc.ru",
                     listOf(
@@ -93,34 +88,13 @@ class PatientDataViewModel(
                         )
                     )
                 )
-                _patient.postValue(Resource.success(patient))
+                _cases.postValue(Resource.success(patient.cases))
             } catch (e: Throwable) {
-                Log.d(TAG, "checkPatient: " + e.message)
-                if (e is HttpException) {
-                    if (e.code() == 404) {
-                        _patient.postValue(Resource.error("Patient does not exist", null))
-                    } else {
-                        _patient.postValue(
-                            Resource.error(
-                                "An error occurred while getting patient data",
-                                null
-                            )
-                        )
-                    }
-                } else {
-                    _patient.postValue(
-                        Resource.error(
-                            "An error occurred while getting patient data",
-                            null
-                        )
-                    )
-                }
+                _cases.postValue(Resource.error("An error occurred white getting case lis", _cases.value?.data ?: listOf()))
+                Log.d(TAG, "getCases: ${e.message}")
             }
         }
     }
 
-    fun resetPatient() {
-        _patient.postValue(null)
-    }
-
+    fun isEmpty(): Boolean = _cases.value?.data?.isEmpty() ?: true
 }
