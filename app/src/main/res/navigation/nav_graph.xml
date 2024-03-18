@@ -67,7 +67,7 @@
         tools:layout="@layout/fragment_case_selection_popup" >
         <argument
             android:name="patientCode"
-            app:argType="string" />
+            app:argType="integer" />
         <argument
             android:name="imageUri"
             app:argType="android.net.Uri" />

@@ -13,9 +13,9 @@ data class Case(
 
 @Parcelize
 data class CasePost(
-    val id: Int?,
-    val doctor: Doctor,
-    val photo: ByteArray,
+    val doctor: Int,
+    val patient: Int,
+    val reports: List<WoundReport> = listOf(),
     val date: String,
 ) : Parcelable
 

@@ -124,7 +124,7 @@ class CameraFragment : Fragment() {
                         onImageSaved(output: ImageCapture.OutputFileResults){
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     if (output.savedUri != null) {
-                        val action = CameraFragmentDirections.actionCameraFragmentToCaseSelectionPopupFragment(args.patient.id.toString(),
+                        val action = CameraFragmentDirections.actionCameraFragmentToCaseSelectionPopupFragment(args.patient.id,
                             output.savedUri!!
                         )
                         findNavController().navigate(action)

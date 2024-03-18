@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teamproject.wounddetection.data.model.Case
@@ -49,6 +51,9 @@ class CaseSelectionPopupFragment : DialogFragment() {
             adapter = CaseAdapter(mutableListOf(), ::onCaseClick)
             rvCasesPopup.adapter = adapter
             pullToRefresh.setOnRefreshListener { viewModel.getCases(args.patientCode) }
+            btnAddCase.setOnClickListener {
+                viewModel.createCase(args.patientCode, args.imageUri)
+            }
         }
     }
 
@@ -68,11 +73,30 @@ class CaseSelectionPopupFragment : DialogFragment() {
                 }
             }
         }
+        viewModel.uploadingPhoto.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.LOADING -> {
+                    binding.pullToRefresh.isRefreshing = true
+                    requireActivity().window.setFlags(
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                }
+                Status.SUCCESS -> {
+                    binding.pullToRefresh.isRefreshing = false
+                    requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                    Toast.makeText(requireContext(), "Photo has been sent to analysis", Toast.LENGTH_SHORT).show()
+                    findNavController().navigateUp()
+                }
+                Status.ERROR -> {
+                    binding.pullToRefresh.isRefreshing = false
+                    requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
-    private fun onCaseClick(case: Case) {
-        // TODO: upload photo to case
-    }
+    private fun onCaseClick(case: Case) = viewModel.uploadToCase(case.id, args.imageUri)
 
     private fun updateData(cases: List<Case>) {
         adapter.clear()
