@@ -14,10 +14,10 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface PatientApi {
-    @GET("/getPatient/{code}")
+    @GET("/patient/{code}")
     suspend fun getPatient(@Path("code") code: String): Patient
 
-    @POST("/cases")
+    @POST("/cases/")
     suspend fun addCase(@Body case: CasePost): Case
 
     @GET("/accounts/profile")
