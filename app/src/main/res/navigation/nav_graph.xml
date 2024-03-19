@@ -44,12 +44,12 @@
         android:name="com.teamproject.wounddetection.view.CaseListFragment"
         android:label="fragment_case_list"
         tools:layout="@layout/fragment_case_list" >
-        <argument
-            android:name="cases"
-            app:argType="com.teamproject.wounddetection.data.model.Case[]" />
         <action
             android:id="@+id/action_caseListFragment_to_reportFragment"
             app:destination="@id/reportFragment" />
+        <argument
+            android:name="patietnCode"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/reportFragment"

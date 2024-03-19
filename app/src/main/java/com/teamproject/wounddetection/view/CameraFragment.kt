@@ -81,7 +81,7 @@ class CameraFragment : Fragment() {
         // Set up the listeners for take photo and video capture buttons
         binding.imageCaptureButton.setOnClickListener { takePhoto() }
         binding.ibCaseList.setOnClickListener {
-            val action = CameraFragmentDirections.actionCameraFragmentToCaseListFragment(args.patient.cases.toTypedArray())
+            val action = CameraFragmentDirections.actionCameraFragmentToCaseListFragment(args.patient.id)
             findNavController().navigate(action)
         }
 
