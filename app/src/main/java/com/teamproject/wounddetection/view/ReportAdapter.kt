@@ -17,6 +17,8 @@ class ReportAdapter(
     private val values: List<WoundReport>
 ) : RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
 
+    private val BASE_URL = "http://10.0.2.2:8000"
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ReportListItemBinding.inflate(
@@ -36,7 +38,7 @@ class ReportAdapter(
             area.text = context.getString(R.string.area, item.area)
             diameter.text = context.getString(R.string.diameter, item.diameter)
             rot.text = context.getString(R.string.additional, item.additional)
-            Picasso.get().load(item.photoUrl).into(image, object : Callback {
+            Picasso.get().load(BASE_URL + item.photoUrl).into(image, object : Callback {
                 override fun onSuccess() {
                     progress.visibility = View.GONE
                 }
