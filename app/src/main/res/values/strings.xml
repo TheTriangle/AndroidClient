@@ -13,7 +13,7 @@
     <string name="type">Wound type: %1$s</string>
     <string name="area">Wound area: %1$s</string>
     <string name="diameter">Wound diameter: %1$s</string>
-    <string name="rot_percentage">Wound rot percentage: %1$s</string>
+    <string name="additional">Additional: %1$s</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

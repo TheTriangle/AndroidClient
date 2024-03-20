@@ -24,7 +24,7 @@ interface PatientApi {
     suspend fun getProfile(): Profile
 
     @Multipart
-    @POST("/wounds")
+    @POST("/wounds/")
     suspend fun uploadWound(
         @Part("case") case: RequestBody,
         @Part("upload_date") uploadDate: RequestBody,
@@ -34,6 +34,6 @@ interface PatientApi {
         @Part("area") area: RequestBody,
         @Part("diameter") diameter: RequestBody,
         @Part("additional") additional: RequestBody,
-        @Part("image_url") img: MultipartBody.Part
+        @Part img: MultipartBody.Part
     )
 }

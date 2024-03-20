@@ -31,11 +31,11 @@ class ReportAdapter(
         val item = values[position]
         holder.apply {
             depth.text = context.getString(R.string.depth, item.depth)
-            woundClass.text = context.getString(R.string.wound_class, item.woundClass)
+            woundClass.text = context.getString(R.string.wound_class, item.category)
             type.text = context.getString(R.string.type, item.type)
-            area.text = context.getString(R.string.area, item.area.toString())
-            diameter.text = context.getString(R.string.diameter, item.diameter.toString())
-            rot.text = context.getString(R.string.rot_percentage, item.rotPercentage.toString())
+            area.text = context.getString(R.string.area, item.area)
+            diameter.text = context.getString(R.string.diameter, item.diameter)
+            rot.text = context.getString(R.string.additional, item.additional)
             Picasso.get().load(item.photoUrl).into(image, object : Callback {
                 override fun onSuccess() {
                     progress.visibility = View.GONE

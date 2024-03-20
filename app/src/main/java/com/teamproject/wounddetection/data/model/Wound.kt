@@ -1,6 +1,7 @@
 package com.teamproject.wounddetection.data.model
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -8,7 +9,7 @@ data class Case(
     val id: Int,
     val doctor: Doctor,
     val reports: List<WoundReport>,
-    val date: String,
+    val date: String?,
 ) : Parcelable
 
 @Parcelize
@@ -23,10 +24,10 @@ data class CasePost(
 data class WoundReport(
     val id: Int,
     val depth: String,
-    val woundClass: String,
+    val category: String,
     val type: String,
-    val area: Double,
-    val diameter: Double,
-    val rotPercentage: Double,
-    val photoUrl: String,
+    val area: String,
+    val diameter: String,
+    val additional: String,
+    @SerializedName("image_url") val photoUrl: String,
 ) : Parcelable

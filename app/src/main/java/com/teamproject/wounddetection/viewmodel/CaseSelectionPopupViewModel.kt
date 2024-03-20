@@ -1,11 +1,12 @@
 package com.teamproject.wounddetection.viewmodel
 
+import android.app.Application
 import android.net.Uri
+import android.provider.OpenableColumns
 import android.util.Log
-import androidx.core.net.toFile
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teamproject.wounddetection.data.api.PatientApi
 import com.teamproject.wounddetection.data.model.Case
@@ -15,7 +16,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,8 +24,9 @@ import java.util.Locale
 
 class CaseSelectionPopupViewModel(
     private val api: PatientApi,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-) : ViewModel() {
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val application: Application
+) : AndroidViewModel(application) {
 
     private val _cases: MutableLiveData<Resource<List<Case>>> =
         MutableLiveData<Resource<List<Case>>>()
@@ -62,7 +63,7 @@ class CaseSelectionPopupViewModel(
                 _uploadingPhoto.postValue(Resource.loading(Unit))
                 val profile = api.getProfile()
                 val date = SimpleDateFormat(
-                    "yyyy-mm-dd",
+                    "yyyy-MM-dd",
                     Locale.getDefault()
                 ).format(Calendar.getInstance().time)
                 val newCase =
@@ -105,13 +106,17 @@ class CaseSelectionPopupViewModel(
             "yyyy-mm-dd",
             Locale.getDefault()
         ).format(Calendar.getInstance().time)
-        val file = uri.toFile()
-        val requestFile = file.asRequestBody(MultipartBody.FORM)
+//        val file = uri.toFile()
+//        val file = FileUtils.
+//        val file = File(uri.toString())
+        val fileResult = getBytesFromUri(uri)
+//        val requestFile = file.asRequestBody(MultipartBody.FORM)
+        val requestFile = fileResult.bytes.toRequestBody(MultipartBody.FORM)
         val img: MultipartBody.Part =
-            MultipartBody.Part.createFormData("image", file.getName(), requestFile)
+            MultipartBody.Part.createFormData("image_url", fileResult.name, requestFile)
         val caseIdBody = caseId.toString().toRequestBody(MultipartBody.FORM)
         val uploadDate = date.toRequestBody(MultipartBody.FORM)
-        val empty = "".toRequestBody(MultipartBody.FORM)
+        val empty = "empty".toRequestBody(MultipartBody.FORM)
         api.uploadWound(
             case = caseIdBody,
             uploadDate = uploadDate,
@@ -124,6 +129,24 @@ class CaseSelectionPopupViewModel(
             additional = empty
         )
     }
+
+    private fun getBytesFromUri(uri: Uri): ReadFileResult {
+        val contentResolver = application.contentResolver
+        contentResolver.query(uri, null, null, null, null)!!.use { cursor ->
+            if (cursor.count == 0) {
+                throw IllegalStateException("File not found")
+            }
+            cursor.moveToFirst()
+            val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            val fileName = cursor.getString(nameIndex)
+            val bytes = contentResolver.openInputStream(uri)!!.use { inputStream ->
+                inputStream.readBytes()
+            }
+            return ReadFileResult(fileName, bytes)
+        }
+    }
+
+    private class ReadFileResult(val name: String, val bytes: ByteArray)
 
     fun isEmpty(): Boolean = _cases.value?.data?.isEmpty() ?: true
 }
