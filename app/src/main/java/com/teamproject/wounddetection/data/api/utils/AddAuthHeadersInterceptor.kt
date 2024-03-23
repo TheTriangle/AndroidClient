@@ -11,7 +11,7 @@ import okhttp3.Response
 class AddAuthHeadersInterceptor(private val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
-        if (!chain.request().url.toString().contains("accounts")) {
+        if (!chain.request().url.toString().contains("accounts") || chain.request().url.toString().contains("profile")) {
             val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
             val preferences = EncryptedSharedPreferences.create(
                 "AUTH",

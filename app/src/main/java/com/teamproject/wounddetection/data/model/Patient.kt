@@ -7,6 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class Patient(
     val id: Int,
     val name: String,
-    val email: String,
+    val mail: String,
     val cases: List<Case>
 ) : Parcelable

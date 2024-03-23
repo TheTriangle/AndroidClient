@@ -60,5 +60,4 @@ class PatientDataViewModel(
     fun resetPatient() {
         _patient.postValue(null)
     }
-
 }

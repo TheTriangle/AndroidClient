@@ -13,7 +13,7 @@
     <string name="type">Wound type: %1$s</string>
     <string name="area">Wound area: %1$s</string>
     <string name="diameter">Wound diameter: %1$s</string>
-    <string name="rot_percentage">Wound rot percentage: %1$s</string>
+    <string name="additional">Additional: %1$s</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -57,4 +57,7 @@
     <string name="password">Password</string>
     <string name="register">Register</string>
     <string name="sign_in">Sign in</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="select_case">Select case to attach photo</string>
 </resources>
