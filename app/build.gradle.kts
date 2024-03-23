@@ -9,6 +9,10 @@ android {
     namespace = "com.teamproject.wounddetection"
     compileSdk = 34
 
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
+
     testOptions {
         // Used for Unit testing Android dependent elements in /test folder
         unitTests.isIncludeAndroidResources  = true
@@ -22,7 +26,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.teamproject.wounddetection.MyTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -68,8 +72,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.recyclerview:recyclerview:1.3.0")
+    implementation("androidx.test:rules:1.5.0")
 
-    var camerax_version = "1.3.0"
+    val camerax_version = "1.3.0"
     implementation("androidx.camera:camera-core:${camerax_version}")
     implementation("androidx.camera:camera-camera2:${camerax_version}")
     implementation("androidx.camera:camera-lifecycle:${camerax_version}")
@@ -89,9 +94,22 @@ dependencies {
 
     implementation("com.squareup.picasso:picasso:2.8")
 
-    testImplementation("org.mockito:mockito-core:3.4.6")
+    testImplementation("org.mockito:mockito-core:3.11.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-inline:3.11.2")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("org.mockito:mockito-android:3.4.6")
+
+    val androidx_test_version = "1.5.0"
+    androidTestImplementation("androidx.test:runner:$androidx_test_version")
+    androidTestImplementation("androidx.test:core-ktx:$androidx_test_version")
+
+    val mockkVersion = "1.13.10"
+    testImplementation("io.mockk:mockk:${mockkVersion}")
+    androidTestImplementation("io.mockk:mockk-android:${mockkVersion}")
+    androidTestImplementation("io.mockk:mockk-agent:${mockkVersion}")
 }
